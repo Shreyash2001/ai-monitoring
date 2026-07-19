@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-07-18T14:22:00Z",
+  "event_phase": "Pre-Match (T-90 min)",
+  "stadium": "Levi's Stadium, Santa Clara",
+  "match": "Brazil vs Argentina — Group D",
+  "total_attendance": 68234,
+  "capacity_total": 75000,
+  "gates": {
+    "gate1": { "queue": 120, "capacity": 500, "status": "normal", "label": "Gate 1 - North", "staff": 8 },
+    "gate2": { "queue": 380, "capacity": 500, "status": "high", "label": "Gate 2 - East", "staff": 12 },
+    "gate3": { "queue": 210, "capacity": 500, "status": "normal", "label": "Gate 3 - South", "staff": 9 },
+    "gate5": { "queue": 445, "capacity": 500, "status": "critical", "label": "Gate 5 - West", "staff": 10 },
+    "gate7": { "queue": 90, "capacity": 500, "status": "low", "label": "Gate 7 - VIP", "staff": 6 }
+  },
+  "medical": {
+    "incidents_active": 3,
+    "incidents_resolved_1h": 7,
+    "medics_on_duty": 24,
+    "ambulances_standby": 4,
+    "defibrillators_ok": 18
+  },
+  "weather": {
+    "temp_c": 28,
+    "feels_like_c": 31,
+    "condition": "Sunny",
+    "humidity_pct": 65,
+    "wind_kmh": 12,
+    "uv_index": 7
+  },
+  "facilities": {
+    "restroom_availability_pct": 42,
+    "concession_wait_avg_min": 8,
+    "parking_full_pct": 78,
+    "accessibility_lanes_open": 6
+  },
+  "staff": {
+    "total_on_duty": 847,
+    "security": 312,
+    "volunteers": 203,
+    "medical": 24,
+    "vendors_active": 124,
+    "supervisors": 18
+  },
+  "security": {
+    "alerts_active": 1,
+    "cameras_online": 247,
+    "cameras_offline": 3,
+    "perimeter_status": "secure"
+  }
+}
