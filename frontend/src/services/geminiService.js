@@ -12,12 +12,13 @@ const MODELS = [
   'gemini-1.5-flash-8b',        // 1,500 req/day  — fallback 3
 ];
 
-function buildPrompt(mode, sensorData, userInput) {
+export function buildPrompt(mode, sensorData, userInput) {
   const sensorStr = JSON.stringify(sensorData ?? {}, null, 2);
 
   switch (mode) {
     case 'crowd_density':
       return `You are an expert stadium crowd management analyst working at the FIFA World Cup 2026 command centre at Levi's Stadium, Santa Clara.
+
 
 The attached image is a synthetic CCTV visualisation showing crowd density levels across all gates and zones. Each coloured zone represents a gate: green = low density, blue = normal, amber = high, red = critical.
 
@@ -181,7 +182,7 @@ Respond with ONLY valid JSON — no markdown fences, no extra text:
   }
 }
 
-function cleanAndParse(text) {
+export function cleanAndParse(text) {
   let cleaned = text
     .replace(/^```(?:json)?\s*/i, '')
     .replace(/\s*```\s*$/i, '')

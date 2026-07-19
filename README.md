@@ -83,7 +83,8 @@ The project is built around a modern, reactive frontend interacting directly wit
 
 - **Resilience Testing**: The multi-model fallback chain ensures graceful degradation. The system is designed to seamlessly recover from 429 (Rate Limit) and 5xx network errors.
 - **Data Mocking**: The `streams.js` engine simulates realistic, fluctuating stadium sensor telemetry (e.g., varying queue lengths, capacities, online camera counts), allowing developers to rigorously test the AI's analytical capabilities without needing a physical stadium backend.
-- **Strict Parsing Verification**: AI outputs are strictly mandated to be JSON. The `cleanAndParse` utility is tested against edge cases (trailing commas, unexpected markdown injections) to guarantee predictable UI states.
+- **Unit Testing**: Unit tests are organized in the dedicated `frontend/tests/` directory.
+- **Strict Parsing Verification**: AI outputs are strictly mandated to be JSON. The `cleanAndParse` utility is tested via Node's native `node:test` framework (requiring zero `npm` dependencies) against edge cases like trailing commas and unexpected markdown injections to guarantee predictable UI states. Run tests using `npm run test` from the `frontend/` directory.
 
 ## Accessibility
 
