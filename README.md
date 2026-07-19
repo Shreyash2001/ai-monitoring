@@ -13,6 +13,41 @@ MatchPulse Ops is a next-generation, GenAI-enabled stadium operations platform b
 - **Multilingual / Multi-Stakeholder Communication**: Automatically drafts tailored announcements for public address systems, social media, and internal radio based on real-time events.
 - **Proactive What-If Simulations**: Allows operators to query hypothetical scenarios (e.g., "What if Gate 3 scanner fails?") and receive predicted cascading impacts.
 
+## Chosen Vertical
+
+**Vertical**: Stadium Operations & Event Management
+
+MatchPulse Ops specifically targets the intense logistical challenges of managing ultra-large-scale events like the FIFA World Cup. By focusing on the stadium operations vertical, the solution empowers venue management, security teams, and fan experience coordinators to operate with unprecedented foresight and coordination.
+
+## Approach and Logic
+
+The core philosophy of MatchPulse Ops is **Multimodal Data Fusion**. 
+Traditional stadium operations rely on disparate dashboards (CCTV on one screen, turnstile counts on another). MatchPulse Ops bridges this gap using Generative AI capable of understanding both visual and tabular data simultaneously.
+
+The logic is built around a continuous sense-and-respond loop:
+1. **Visual Context**: Extracting raw, real-time visual frames from CCTV feeds.
+2. **Telemetry Context**: Capturing live IoT data (queue sizes, gate capacities, camera statuses).
+3. **AI Reasoning**: Feeding both the visual frame (via Base64) and the telemetry payload (via JSON) into a multimodal LLM (Gemini 1.5 Flash / Moondream). 
+4. **Structured Action**: Forcing the LLM to output highly structured JSON using strict prompting, which the React UI instantly parses into actionable, color-coded widgets, incident cards, and dispatch commands.
+
+## How the Solution Works
+
+1. **Data Ingestion**: 
+   - A hidden `<canvas>` element continuously samples the active CCTV `<video>` feed at low resolution (320x180).
+   - Simultaneously, an RxJS polling stream (`streams.js`) simulates and fetches live stadium IoT metrics (turnstile counts, occupancy percentages).
+2. **User Interaction**: The command center operator selects a specific AI module (e.g., *Resource Optimizer* or *What-If Simulator*) from the sidebar and types a query (e.g., "Gate 3 is overflowing, where do we send staff?").
+3. **Prompt Construction**: `geminiService.js` constructs a complex prompt that includes the operator's query, the JSON string of the IoT telemetry, and the base64-encoded CCTV frame.
+4. **Inference & Fallback**: The payload is sent directly to the Gemini API. If Gemini hits rate limits or fails, the system automatically reconstructs the payload and queries the Moondream API.
+5. **UI Update**: The AI returns a structured JSON string. The service strips any markdown formatting, parses the JSON, and pipes the data back into the RxJS `aiResponseSubject`.
+6. **Rendering**: The active React module subscribes to this stream and instantly renders the AI's recommendations—such as updating staff allocation charts, flashing critical warnings, or drafting PA announcements.
+
+## Assumptions Made
+
+- **Availability of CCTV Feeds**: Assumes that modern stadiums have IP-based CCTV cameras capable of exposing video feeds (via WebRTC, HLS, or direct MP4 streams) that can be drawn to an HTML5 canvas.
+- **Structured Sensor Data**: Assumes the venue possesses an IoT infrastructure (smart turnstiles, ticket scanners) capable of aggregating queue lengths and occupancy data into a centralized JSON API endpoint.
+- **Real-Time Connectivity**: Assumes the command center operates on a high-bandwidth, low-latency network capable of supporting near real-time API calls to cloud AI providers.
+- **CORS Configuration**: Assumes that the CCTV video feeds are served with appropriate Cross-Origin Resource Sharing (CORS) headers (`Access-Control-Allow-Origin: *`), allowing the client-side browser to extract canvas frames without security tainting. (If CORS fails, the app safely falls back to a synthetic heatmap).
+
 ## Architecture
 
 The project is built around a modern, reactive frontend interacting directly with multimodal AI APIs.
